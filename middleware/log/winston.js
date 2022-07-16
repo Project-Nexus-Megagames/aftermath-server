@@ -2,7 +2,7 @@ const errorDebugger = require('debug')('app:error');
 const winston = require('winston');
 // may need to comment out line below if we have problems with integration testing
 require('winston-mongodb');
-const dbURI = require('../mongoDB/keys').mongoURI;
+
 
 const { createLogger, format, transports } = winston;
 
@@ -31,7 +31,7 @@ const logger = createLogger({
 		}),
 		// Error DB to log collection
 		new transports.MongoDB({
-			db: dbURI,
+			db: process.env.MONGODB_URL,
 			level: 'error',
 			metaKey: 'meta',
 			collection: 'errors',
