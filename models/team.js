@@ -9,12 +9,17 @@ const unitSchema = new Schema({
 	location: { type: String, default: '' }
 });
 
+const locationSchema = new Schema({
+	lat: { type: Number, default: 0 },
+	lng: { type: Number, default: 0 }
+});
+
 const TeamSchema = new Schema({
 	model: { type: String, default: 'Team' },
 	units: [unitSchema],
 	description: { type: String, default: 'Just a team of people, trying to survive after the apocalypse' },
 	conditions: [{ type: String, default: 'None' }],
-	location: { type: String, default: '' }
+	location: locationSchema
 });
 
 const Team = mongoose.model('Team', TeamSchema);
