@@ -1,0 +1,7 @@
+{
+	"jwtPrivateKey": "spooky",
+	"dbName": "aftermathDB",
+	"clientURL": "https://aftermath-app.onrender.com/",
+	"serverURL": "https://aftermath-server.onrender.com/",
+	"socketCORS": "https://aftermath-app.onrender.com"
+}
