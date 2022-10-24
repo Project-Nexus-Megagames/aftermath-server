@@ -12,7 +12,7 @@ async function addPoi(data) {
 		});
 		const newPoi = await article.save();
 		// TODO await newPoi.populateMe();
-		nexusEvent.emit('respondClient', 'update', [newPoi]);
+		nexusEvent.emit('respondClient', 'create', [newPoi]);
 		return { message: 'Poi Creation Success', type: 'success' };
 	} catch (err) {
 		logger.error(`message : Server Error: ${err.message}`);
