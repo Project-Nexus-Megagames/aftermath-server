@@ -3,12 +3,13 @@ const { Poi } = require('../models/poi');
 const nexusEvent = require('../middleware/events/events');
 
 async function addPoi(data) {
-	const { title, body, creator } = data;
+	const { title, body, creator, location } = data;
 	try {
 		const article = new Poi({
 			creator,
 			title,
-			body
+			body,
+			location
 		});
 		const newPoi = await article.save();
 		// TODO await newPoi.populateMe();

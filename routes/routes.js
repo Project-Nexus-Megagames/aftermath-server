@@ -11,7 +11,6 @@ module.exports = function (app) {
 	app.use(cors());
 	logger.info('Route Middleware Loaded...');
 	app.use(bodyParser.json()); // Tells Express to use Body Parser for JSON
-
 	app.use('/', home);
 	app.use('/api/pois', poi);
 };

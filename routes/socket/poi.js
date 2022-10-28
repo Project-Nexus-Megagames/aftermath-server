@@ -8,7 +8,7 @@ module.exports = {
 			logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
 			let response;
 			switch (req.action) {
-				case 'add': {
+				case 'create': {
 					response = await addPoi(req.data, client.username);
 					response.type === 'success' ? client.emit('alert', { type: 'success', message: 'Poi added!' }) : null;
 					break;
