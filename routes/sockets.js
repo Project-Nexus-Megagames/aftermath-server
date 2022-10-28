@@ -1,5 +1,5 @@
 const { logger } = require('../middleware/log/winston');
-const nexusEvent = require('../middleware/events/events');
+// const nexusEvent = require('../middleware/events/events');
 const fs = require('fs'); // Node.js file system module
 const config = require('config');
 
@@ -27,18 +27,19 @@ module.exports = function (server) {
 		}
 	}); // Creation of websocket Server
 	io.use((client, next) => {
-		// const { username, character, version } = client.handshake.auth;
+		console.log(client.handshake);
+		const { username, character, version } = client.handshake.auth;
 		// if (!username) return next(new Error('Invalid Username'));
-		client.username = 'test';
-		client.character = 'testCharacter';
-		client.version = '1.0';
+		client.username = username;
+		client.character = character;
+		client.version = version;
 		next();
 	});
 
 	io.on('connection', (client) => {
 		console.log(`${client.username} connected (${client.id}), ${io.of('/').sockets.size} clients connected.`);
 		client.emit('alert', { type: 'success', message: `${client.username} Connected to CANDI server...` });
-		currentUsers();
+		// currentUsers();
 
 		client.on('request', (req) => {
 			console.log(req);
@@ -64,7 +65,7 @@ module.exports = function (server) {
 			console.log(`${client.username} disconnected (${client.id}), ${io.of('/').sockets.size} clients connected.`);
 			client.emit('alert', { type: 'info', message: `${client.username} Logged out...` });
 			client.disconnect();
-			currentUsers();
+			// currentUsers();
 		});
 
 		client.on('disconnecting', (reason) => {
@@ -74,20 +75,20 @@ module.exports = function (server) {
 
 		client.on('disconnect', () => {
 			console.log(`${client.username} (${client.id}) disconnected from update service, ${io.of('/').sockets.size} clients connected.`);
-			currentUsers();
+			// currentUsers();
 		});
 	});
 
-	function currentUsers() {
-		const users = [];
-		for (const [id, socket] of io.of('/').sockets) {
-			users.push({
-				userID: id,
-				username: socket.username,
-				character: socket.character ? socket.character : 'Unassigned',
-				clientVersion: socket.version ? socket.version : 'Old Client'
-			});
-		}
-		io.emit('clients', users);
-	}
+	// function currentUsers() {
+	//	const users = [];
+	//	for (const [id, socket] of io.of('/').sockets) {
+	//		users.push({
+	//			userID: id,
+	//			username: socket.username,
+	//			character: socket.character ? socket.character : 'Unassigned',
+	//			clientVersion: socket.version ? socket.version : 'Old Client'
+	//		});
+	//	}
+	//	io.emit('clients', users);
+	// }
 };
