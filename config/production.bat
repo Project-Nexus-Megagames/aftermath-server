@@ -1,7 +1,7 @@
-@ECHO OFF 
+@ECHO OFF
 echo Setting Dev Environment
 set NODE_ENV=production
-set DEBUG=""
+set DEBUG="app:*"
 set DEBUG_COLORS="false"
 set RUN_INIT_REF="false"
 echo NODE_ENV: %NODE_ENV%
