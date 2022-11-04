@@ -2,7 +2,7 @@ const { logger } = require('../middleware/log/winston');
 // const nexusEvent = require('../middleware/events/events');
 const fs = require('fs'); // Node.js file system module
 const config = require('config');
-
+const nexusEvent = require('../middleware/events/events'); // Local event triggers
 const socketFiles = fs.readdirSync('./routes/socket/').filter((file) => file.endsWith('.js'));
 const socketMap = new Map();
 const serverVersion = config.get('version');
@@ -91,4 +91,29 @@ module.exports = function (server) {
 	//	}
 	//	io.emit('clients', users);
 	// }
+
+	nexusEvent.on('respondClient', async (type, data) => {
+		switch (type) {
+			case 'update':
+				io.emit('updateClients', data);
+				break;
+			case 'delete':
+				io.emit('deleteClients', data);
+				break;
+			case 'create':
+				io.emit('createClients', data);
+				break;
+			case 'refresh':
+				io.emit('alert', { type: 'refresh', message: 'Logged Out' });
+				break;
+			case 'bitsy':
+				io.emit('bitsy', { action: data.action });
+				break;
+			case 'notification':
+				io.emit('alert', { type: 'article', data });
+				break;
+			default:
+				logger.error('Scott Should never see this....');
+		}
+	});
 };

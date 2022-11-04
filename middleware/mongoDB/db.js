@@ -3,7 +3,8 @@ const { logger } = require('../log/winston'); // Import of winston for error log
 const config = require('config');
 
 const dbName = config.get('dbName');
-const dbURI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@candi.zx3mbs8.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+// const dbURI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@candi.zx3mbs8.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const dbURI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.gev25ke.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
 console.log('OY', dbURI);
 
