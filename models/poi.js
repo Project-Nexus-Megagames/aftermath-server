@@ -13,7 +13,7 @@ const PoiSchema = new Schema({
 	model: { type: String, default: 'Poi' },
 	type: { type: String, default: 'Note' },
 	title: { type: String, default: 'There is something here' },
-	body: [{ type: String, default: 'There is something here' }],
+	body: { type: String, default: 'There is something here' },
 	location: locationSchema,
 	creator: { type: ObjectId, ref: 'Character' }
 });
