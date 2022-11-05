@@ -11,8 +11,6 @@ async function addPoi(data) {
 			body,
 			location
 		});
-
-		console.log('this is the data', data);
 		const newPoi = await poi.save();
 		// TODO await newPoi.populateMe();
 		nexusEvent.emit('respondClient', 'create', [newPoi]);
@@ -22,6 +20,57 @@ async function addPoi(data) {
 		return { message: `message : Server Error: ${err.message}`, type: 'error' };
 	}
 }
+
+async function updatePoi(data) {
+	const _id = data._id;
+	const poi = await Poi.findById(_id);
+
+	try {
+		if (poi === null) {
+			return { message: `Could not find a character for _id "${_id}"`, type: 'error' };
+		} else if (poi.length > 1) {
+			return { message: `Found multiple characters for _id ${_id}`, type: 'error' };
+		} else {
+			for (const el in data) {
+				if (data[el] !== undefined && data[el] !== '' && el !== '_id' && el !== 'model') {
+					poi[el] = data[el];
+				} else {
+					console.log(`Detected invalid edit: ${el} is ${data[el]}`);
+				}
+			}
+			await poi.save();
+			// TODO await newPoi.populateMe();
+			nexusEvent.emit('respondClient', 'update', [poi]);
+			return { message: `Character ${poi.title} edited`, type: 'success' };
+		}
+	} catch (err) {
+		logger.error(`message : Server Error: ${err.message}`);
+		return { message: `message : Server Error: ${err.message}`, type: 'error' };
+	}
+}
+
+async function deletePoi(data) {
+	const _id = data;
+	const poi = await Poi.findById(_id);
+
+	try {
+		if (poi === null) {
+			return { message: `Could not find a character for _id "${_id}"`, type: 'error' };
+		} else if (poi.length > 1) {
+			return { message: `Found multiple characters for _id ${_id}`, type: 'error' };
+		} else {
+			await poi.delete();
+			nexusEvent.emit('respondClient', 'delete', [poi]);
+			return { message: `Character ${poi.title} edited`, type: 'success' };
+		}
+	} catch (err) {
+		logger.error(`message : Server Error: ${err.message}`);
+		return { message: `message : Server Error: ${err.message}`, type: 'error' };
+	}
+}
+
 module.exports = {
-	addPoi
+	addPoi,
+	updatePoi,
+	deletePoi
 };

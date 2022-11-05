@@ -1,5 +1,5 @@
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
-const { addPoi } = require('../../game/pois');
+const { addPoi, updatePoi, deletePoi } = require('../../game/pois');
 
 module.exports = {
 	name: 'poi',
@@ -11,6 +11,16 @@ module.exports = {
 				case 'create': {
 					response = await addPoi(req.data, client.username);
 					response.type === 'success' ? client.emit('alert', { type: 'success', message: 'Poi added!' }) : null;
+					break;
+				}
+				case 'update': {
+					response = await updatePoi(req.data, client.username);
+					response.type === 'success' ? client.emit('alert', { type: 'success', message: 'Poi updated!' }) : null;
+					break;
+				}
+				case 'delete': {
+					response = await deletePoi(req.data, client.username);
+					response.type === 'success' ? client.emit('alert', { type: 'success', message: 'Poi updated!' }) : null;
 					break;
 				}
 				default: {
