@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function () {
 	// Error handling and Logging
 	const error = require('../log/winston'); // winston for error handling
 	require('express-async-errors'); // [npm] express-async-errors, used to do try/catch error handling

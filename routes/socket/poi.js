@@ -5,22 +5,30 @@ module.exports = {
 	name: 'poi',
 	async function(client, req) {
 		try {
-			logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
+			logger.info(
+				`${client.username} has made a ${req.action} request in the ${req.route} route!`
+			);
 			let response;
 			switch (req.action) {
 				case 'create': {
 					response = await addPoi(req.data, client.username);
-					response.type === 'success' ? client.emit('alert', { type: 'success', message: 'Poi added!' }) : null;
+					response.type === 'success'
+						? client.emit('alert', { type: 'success', message: 'Poi added!' })
+						: null;
 					break;
 				}
 				case 'update': {
 					response = await updatePoi(req.data, client.username);
-					response.type === 'success' ? client.emit('alert', { type: 'success', message: 'Poi updated!' }) : null;
+					response.type === 'success'
+						? client.emit('alert', { type: 'success', message: 'Poi updated!' })
+						: null;
 					break;
 				}
 				case 'delete': {
 					response = await deletePoi(req.data, client.username);
-					response.type === 'success' ? client.emit('alert', { type: 'success', message: 'Poi updated!' }) : null;
+					response.type === 'success'
+						? client.emit('alert', { type: 'success', message: 'Poi updated!' })
+						: null;
 					break;
 				}
 				default: {

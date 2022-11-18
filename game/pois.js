@@ -28,12 +28,23 @@ async function updatePoi(data) {
 
 	try {
 		if (poi === null) {
-			return { message: `Could not find a character for _id "${_id}"`, type: 'error' };
+			return {
+				message: `Could not find a character for _id "${_id}"`,
+				type: 'error'
+			};
 		} else if (poi.length > 1) {
-			return { message: `Found multiple characters for _id ${_id}`, type: 'error' };
+			return {
+				message: `Found multiple characters for _id ${_id}`,
+				type: 'error'
+			};
 		} else {
 			for (const el in data) {
-				if (data[el] !== undefined && data[el] !== '' && el !== '_id' && el !== 'model') {
+				if (
+					data[el] !== undefined &&
+					data[el] !== '' &&
+					el !== '_id' &&
+					el !== 'model'
+				) {
 					poi[el] = data[el];
 				} else {
 					console.log(`Detected invalid edit: ${el} is ${data[el]}`);
@@ -56,9 +67,15 @@ async function deletePoi(data) {
 
 	try {
 		if (poi === null) {
-			return { message: `Could not find a character for _id "${_id}"`, type: 'error' };
+			return {
+				message: `Could not find a character for _id "${_id}"`,
+				type: 'error'
+			};
 		} else if (poi.length > 1) {
-			return { message: `Found multiple characters for _id ${_id}`, type: 'error' };
+			return {
+				message: `Found multiple characters for _id ${_id}`,
+				type: 'error'
+			};
 		} else {
 			await poi.delete();
 			nexusEvent.emit('respondClient', 'delete', [poi]);

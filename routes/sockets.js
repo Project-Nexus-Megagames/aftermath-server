@@ -3,7 +3,9 @@ const { logger } = require('../middleware/log/winston');
 const fs = require('fs'); // Node.js file system module
 const config = require('config');
 const nexusEvent = require('../middleware/events/events'); // Local event triggers
-const socketFiles = fs.readdirSync('./routes/socket/').filter((file) => file.endsWith('.js'));
+const socketFiles = fs
+	.readdirSync('./routes/socket/')
+	.filter((file) => file.endsWith('.js'));
 const socketMap = new Map();
 const serverVersion = config.get('version');
 
@@ -37,17 +39,30 @@ module.exports = function (server) {
 	});
 
 	io.on('connection', (client) => {
-		console.log(`${client.username} connected (${client.id}), ${io.of('/').sockets.size} clients connected.`);
-		client.emit('alert', { type: 'success', message: `${client.username} Connected to CANDI server...` });
+		console.log(
+			`${client.username} connected (${client.id}), ${
+				io.of('/').sockets.size
+			} clients connected.`
+		);
+		client.emit('alert', {
+			type: 'success',
+			message: `${client.username} Connected to CANDI server...`
+		});
 		// currentUsers();
 
 		client.on('request', (req) => {
 			console.log(req);
 			// Request object: { route, action, data }
 			if (!req.route) {
-				client.emit('alert', { type: 'error', message: 'Socket Request missing a route...' });
+				client.emit('alert', {
+					type: 'error',
+					message: 'Socket Request missing a route...'
+				});
 			} else if (!req.action) {
-				client.emit('alert', { type: 'error', message: 'Socket Request missing an action type...' });
+				client.emit('alert', {
+					type: 'error',
+					message: 'Socket Request missing an action type...'
+				});
 			} else {
 				const socket = socketMap.get(req.route);
 				if (socket) {
@@ -57,13 +72,23 @@ module.exports = function (server) {
 						logger.error(err);
 					}
 				} else {
-					client.emit('alert', { message: `Socket-file not found! Route: ${req.route}\nAction: ${req.action}`, type: 'error' });
+					client.emit('alert', {
+						message: `Socket-file not found! Route: ${req.route}\nAction: ${req.action}`,
+						type: 'error'
+					});
 				}
 			}
 		});
 		client.on('logout', () => {
-			console.log(`${client.username} disconnected (${client.id}), ${io.of('/').sockets.size} clients connected.`);
-			client.emit('alert', { type: 'info', message: `${client.username} Logged out...` });
+			console.log(
+				`${client.username} disconnected (${client.id}), ${
+					io.of('/').sockets.size
+				} clients connected.`
+			);
+			client.emit('alert', {
+				type: 'info',
+				message: `${client.username} Logged out...`
+			});
 			client.disconnect();
 			// currentUsers();
 		});
@@ -74,7 +99,11 @@ module.exports = function (server) {
 		});
 
 		client.on('disconnect', () => {
-			console.log(`${client.username} (${client.id}) disconnected from update service, ${io.of('/').sockets.size} clients connected.`);
+			console.log(
+				`${client.username} (${client.id}) disconnected from update service, ${
+					io.of('/').sockets.size
+				} clients connected.`
+			);
 			// currentUsers();
 		});
 	});

@@ -65,7 +65,10 @@ router.post('/', async function (req, res, next) {
 				logger.info(`Location "${newElement.title}" created.`);
 				res.status(200).json(poi);
 			} else {
-				nexusError(`An POI with title ${newElement.title} already exists!`, 400);
+				nexusError(
+					`An POI with title ${newElement.title} already exists!`,
+					400
+				);
 			}
 		} catch (err) {
 			httpErrorHandler(res, err);
@@ -106,7 +109,9 @@ router.delete('/:id', async function (req, res, next) {
 
 router.patch('/deleteAll', async function (req, res) {
 	const data = await Poi.deleteMany();
-	return res.status(200).send(`We wiped out ${data.deletedCount} Points of Interest`);
+	return res
+		.status(200)
+		.send(`We wiped out ${data.deletedCount} Points of Interest`);
 });
 
 // router.post('/initLocations', async function (req, res) {
