@@ -8,8 +8,7 @@
 		"start": "node server.js",
 		"prod": "set NODE_ENV=production&& env-cmd -f ./config/.env node server.js",
 		"server": "nodemon server.js",
-		"dev": "env-cmd -f ./config/.env nodemon server.js",
-		"build": "webpack"
+		"dev": "env-cmd -f ./config/.env nodemon server.js"
 	},
 	"repository": {
 		"type": "git",
