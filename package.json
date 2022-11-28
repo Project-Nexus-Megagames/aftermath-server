@@ -41,7 +41,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.10.9",
 		"prettier": "^2.7.1",
-		"socket.io": "4.5.3",
+		"socket.io": "4.5.4",
 		"winston": "^3.3.3",
 		"winston-mongodb": "^5.0.5"
 	},
