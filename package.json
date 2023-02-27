@@ -39,7 +39,7 @@
 		"express-async-errors": "^3.1.1",
 		"helmet": "^3.23.3",
 		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^5.10.9",
+		"mongoose": "^6.10.0",
 		"prettier": "^2.7.1",
 		"socket.io": "4.5.3",
 		"winston": "^3.3.3",
